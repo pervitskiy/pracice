@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% load static  %}
+
+{% block title %} Главная страница {% endblock %}
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href= "{% static 'attestation/css/index.css'%} ">
+{% endblock %}
+{% block scripts%}
+<script src="https://getbootstrap.com/docs/4.5/assets/js/docs.min.js"></script>
+{% endblock%}
+{% block content %}
+<hr class="mt-0">
+<div class="container">
+        {% if message %}
+              <div class="alert alert-success alert-general text-cener" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">✖</button>
+                       {{ message }}
+                </div>
+        {% endif %}
+
+        {% if error %}
+              <div class="alert alert-danger alert-general text-cener" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">✖</button>
+                       {{ error }}
+                </div>
+        {% endif %}
+    <h1 class="text-primary">Обработать Аттестационные ведомости</h1><hr class="mb-5">
+
+    <div class="row">
+        <div class="col-md-5 order-md-1">
+            <form  id="upload-container" method="post" enctype="multipart/form-data">
+                <img id="upload-image" src="{% static 'attestation/img/input.png' %}">
+                <div>
+                        {% csrf_token %}
+                    <input id="file-input"  class="form-control"  type="file"  name="file"  required >
+                    <label for="file-input">Выберите файл</label>
+                    <input class="btn btn-lg btn-primary btn-block" type="submit" value="Загрузить" >
+
+                </div>
+
+            </form>
+            {% if message %}
+            <hr class="mb-3">
+              <div class="alert alert-secondary alert-general text-cener" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">✖</button>
+                         <h6> Количество студентов со средним баллом:</h6>
+                  <ul>
+                      <li>От 45: {{ number_of_rating_gt_44 }}</li>
+                      <li class="">От 35 до 45: {{ number_of_rating_gt_34 }}</li>
+                      <li class="text-warning">От 25 до 35: {{ number_of_rating_gt_24 }}</li>
+                      <li class="text-danger">До 25: {{ number_of_rating_lt_25 }}</li>
+                  </ul>
+
+                </div>
+        {% endif %}
+
+
+        </div>
+        <div class="col order-md-2 mb-4">
+              <h4 class="d-flex justify-content-between align-items-center mb-3">
+                  <span class="text-primary">  Как обработать аттестационный файл? <i> &#9432; </i></span>
+              </h4>
+                <ol>
+                    <li>Выберите нужный файл в <u> формате xlsx(Exel) </u></li>
+                  <li>Нажмите загрузить</li>
+                </ol>
+
+                <h4 class="d-flex justify-content-between align-items-center mb-3">
+                      <span class="text-primary">В случае успешной загрузки:</span>
+                </h4>
+                 <ul>
+                      <li>База данных студенты будет обновлена</li>
+                      <li>База данных предметов будет обновлена</li>
+                      <li>База данных аттестации с указанием на предмет и студента будет обновлена </li>
+                      <li>Появится увеломление со статистикой аттестационной ведомости</li>
+                </ul>
+
+                     <h4 class="d-flex justify-content-between align-items-center mb-3">
+                          <span class="text-primary">Шапка аттестационной ведомости в фомате exel должна быть заполнена как на примере ниже:</span>
+                    </h4>
+                <img class="img" src= "{% static 'attestation/img/example.png'%} " alt="">
+                           <span class="text-muted"> <i> &#65121 </i>Поля аттестации могут быть не заполнены</span> <br>
+                           <span class="text-muted"> <i> &#65121 </i>Баллы по аттестациям должны быть от 0 до 50</span>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

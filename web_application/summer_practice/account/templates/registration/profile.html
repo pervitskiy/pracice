@@ -1,0 +1,60 @@
+{% extends  'base.html' %}
+{% block title %}
+Мой профиль
+{% endblock %}
+
+{% block content %}
+
+
+<div class="container mt-5">
+  <div class="text-center">
+    <h2 class="text-primary">Мой профиль:</h2>
+    <hr class="mb-5">
+  </div>
+  <div class="row">
+    <div class="col-md-10 order-2">
+        {% if error %}
+            <div class="alert alert-danger" role="alert">
+                 {{ error }}
+            </div>
+        {% endif %}
+      <form class="needs-validation" novalidate method="post" enctype="multipart/form-data ">
+          {% csrf_token %}
+          <div class="form-group row ">
+                <label for="login" class="col-sm-3 col-form-label">Логин:</label>
+                    <div class="col-sm-9">
+                         <input type="text" class="form-control" id="login" name="login" value="{{ user.username }}" required readonly>
+                    </div>
+          </div>
+          <div class="form-group row ">
+                    <label for="email" class="col-sm-3 col-form-label"> Email: <span class="text-muted">(Необязательно)</span> </label>
+                        <div class="col-sm-9">
+                             <input type="text" class="form-control" id="email" name="email" value="{{user.email}}">
+
+                        </div>
+          </div>
+          <div class="form-group row ">
+                    <label for="first_name" class="col-sm-3 col-form-label"> Имя: <span class="text-muted">(Необязательно)</span></label>
+                        <div class="col-sm-9">
+                             <input type="text" class="form-control" id="first_name" name="first_name" value="{{user.first_name}}">
+                                <div class="invalid-feedback">
+                                </div>
+                        </div>
+          </div>
+
+          <div class="form-group row ">
+                    <label for="last_name" class="col-sm-3 col-form-label"> Фамилия: <span class="text-muted">(Необязательно)</span></label>
+                        <div class="col-sm-9">
+                             <input type="text" class="form-control" id="last_name" name="last_name" value="{{user.last_name}}">
+                                <div class="invalid-feedback">
+                                </div>
+                        </div>
+          </div>
+          <button class="btn btn-primary btn-lg" type="submit">Сохранить</button>
+          <button class="btn btn-lg btn-outline-warning" type="reset">Очистить форму</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

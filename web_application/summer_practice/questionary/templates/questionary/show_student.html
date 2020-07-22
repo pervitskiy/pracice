@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static  %}
+
+{% block title %}
+Список студентов
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+    {% if students %}
+          {% for student in students %}
+      <div class="list-group">
+          <a href="{% url 'detail_student' student.id %}" class="list-group-item list-group-item-action list-group-item-primary">
+              {{ student.course }} курс, {{ student.group }} группа,{{ student.last_name }}
+          </a>
+      </div>
+    {% endfor%}
+    <form method="post" >
+         {% csrf_token %}
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox"  name="sort_course" id="inlineCheckbox1" value="option1">
+          <label class="form-check-label" for="inlineCheckbox1" >Сортировать по курсу(убывание):</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="inlineCheckbox2"  name="sort_group" value="option2">
+          <label class="form-check-label" for="inlineCheckbox2" >Сортировать по группе(убывание):</label>
+        </div>
+        <div class="form-check ">
+          <input class="form-check-input" type="checkbox" id="inlineCheckbox3" name="sort_last_name" value="option3">
+          <label class="form-check-label" for="inlineCheckbox3" >Сортировать по фамилии(А-Я)</label>
+        </div>
+        <button class="btn btn-primary" type="submit"> Сортировать</button>
+    </form>
+    {% else %}
+    <div class="alert alert-warning" role="alert">
+            Список студентов пуст!
+        <a href="/profile/create"> Добавить:</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
